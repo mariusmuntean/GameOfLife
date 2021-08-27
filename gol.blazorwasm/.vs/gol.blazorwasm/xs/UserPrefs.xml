@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{E2F6CECD-3316-4DAA-9ED7-7C7F043219DD}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pages/LifeComponent.razor">
+    <Files>
+      <File FileName="Pages/LifeComponent.razor" Line="83" Column="38" />
+      <File FileName="wwwroot/css/app.css" Line="15" Column="1" />
+      <File FileName="wwwroot/index.html" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="gol.blazorwasm" expanded="True">
+            <Node name="gol.blazorwasm" expanded="True">
+              <Node name="Models" expanded="True" />
+              <Node name="Pages" expanded="True" />
+              <Node name="wwwroot" expanded="True">
+                <Node name="css" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.gol.blazorwasm PreferredExecutionTarget="/Applications/Microsoft Edge.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/marius/Projects/GOL/gol.blazorwasm/Pages/SimpleLifeComponent.razor" relfile="Pages/SimpleLifeComponent.razor" line="86" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
