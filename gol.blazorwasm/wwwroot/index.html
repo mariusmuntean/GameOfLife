@@ -19,7 +19,6 @@
     <a class="dismiss">🗙</a>
 </div>
 <script src="_framework/blazor.webassembly.js"></script>
-<script src="_content/Blazor.Extensions.Canvas/blazor.extensions.canvas.js"></script>
 
 <script>window.getWindowDimensions = function () {
     return {
@@ -43,17 +42,16 @@
     }
     return true;
 };</script>
+
 <script>
     window.renderCellsOnCanvas = (canvas, mask, maskColors, _cellEdgeAndSpacingLength, _cellEdgeLength) => {
         mask.forEach((row, rowIndex) => {
             row.forEach((cellState, colIndex) => {
-
                 var ctx = canvas.getContext("2d");
                 ctx.beginPath();
                 ctx.fillStyle = maskColors[cellState];
                 ctx.rect(colIndex * _cellEdgeAndSpacingLength, rowIndex * _cellEdgeAndSpacingLength, _cellEdgeLength, _cellEdgeLength);
                 ctx.fill();
-
             })
         })
     }
