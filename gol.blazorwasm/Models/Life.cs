@@ -98,12 +98,11 @@ namespace gol.blazorwasm.Models
         {
             if (row < 0 || row >= _rows)
             {
-                throw new ArgumentOutOfRangeException(nameof(row));
+                throw new ArgumentOutOfRangeException(nameof(row), row, "Row value invalid");
             }
-
             if (col < 0 || col >= _cols)
             {
-                throw new ArgumentOutOfRangeException(nameof(col));
+                throw new ArgumentOutOfRangeException(nameof(col), col, "Column value invalid");
             }
 
             _cells[row][col].Toggle();
@@ -114,9 +113,9 @@ namespace gol.blazorwasm.Models
         {
             var neighbors = new List<Cell>(8);
 
-            for (int rowOffset = -1; rowOffset <= 1; rowOffset++)
+            for (var rowOffset = -1; rowOffset <= 1; rowOffset++)
             {
-                for (int colOffset = -1; colOffset <= 1; colOffset++)
+                for (var colOffset = -1; colOffset <= 1; colOffset++)
                 {
                     if (rowOffset == 0 && colOffset == 0)
                     {

@@ -2,11 +2,6 @@
 
 @inject IJSRuntime _jsRuntime
 
-<LifeComponent Rows="50"
-               Columns="50"
-               PixelWidth="@PixelWidth"
-               PixelHeight="@PixelHeight" />
-
 @code
 {
     public int PixelWidth { get; set; }
@@ -30,3 +25,9 @@
         public int Height { get; set; }
     }
 }
+
+<SimpleLife Rows="50"
+                     Columns="50"
+                     PixelWidth="@PixelWidth"
+                     PixelHeight="@PixelHeight"/>
+                     
