@@ -2,10 +2,10 @@
 
 @inject IJSRuntime _jsRuntime
 
-<LifeComponent Rows="50"
-               Columns="50"
-               PixelWidth="@PixelWidth"
-               PixelHeight="@PixelHeight" />
+<LifeComponentCanvas Rows="50"
+                     Columns="50"
+                     PixelWidth="@PixelWidth"
+                     PixelHeight="@PixelHeight"/>
 
 @code
 {
@@ -16,7 +16,7 @@
     {
         if (firstRender)
         {
-            // This only works because I added an appropriate Javascript function to the "window" object. See index.html.
+    // This only works because I added an appropriate Javascript function to the "window" object. See index.html.
             var dimensions = await _jsRuntime.InvokeAsync<WindowDimensions>("getWindowDimensions");
             PixelWidth = Math.Min(dimensions.Width, dimensions.Height);
             PixelHeight = Math.Min(dimensions.Width, dimensions.Height);

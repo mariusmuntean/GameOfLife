@@ -1,0 +1,164 @@
+﻿@using gol.blazorwasm.Models
+@using Microsoft.AspNetCore.Components.Web
+@using System.Text.Json;
+@using Blazor.Extensions
+@using Blazor.Extensions.Canvas.Canvas2D
+
+@inject IJSRuntime _jsRuntime;
+
+@code
+{
+    BECanvasComponent _canvasReference;
+    Canvas2DContext _context;
+
+    private Life? _life;
+    private int _cellEdgeAndSpacingLength;
+    private double _cellEdgeLength;
+    private int _canvasWidth;
+    private int _canvasHeight;
+
+    [Parameter]
+    public int Columns { get; set; }
+
+    [Parameter]
+    public int Rows { get; set; }
+
+    [Parameter]
+    public int PixelWidth { get; set; }
+
+    [Parameter]
+    public int PixelHeight { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        InitData();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        _context = await _canvasReference.CreateCanvas2DAsync();
+
+        var mask = new byte[Rows][];
+        for (var row = 0; row < Rows; row++)
+        {
+            mask[row] = new byte[Columns];
+            for (var col = 0; col < Columns; col++)
+            {
+                var currentCell = _life.Cells[row][col];
+                mask[row][col] = (byte)currentCell.CurrentState;
+            }
+        }
+        var maskColors = new[] { "black", "red" };
+
+        await _jsRuntime.InvokeVoidAsync("renderCellsOnCanvas", _context.Canvas, mask, maskColors, _cellEdgeAndSpacingLength, _cellEdgeLength);
+    }
+
+    private void InitData()
+    {
+        _life = new Life(Rows, Columns, cells => { });
+
+        // Glider
+        _life.Toggle(2, 2);
+        _life.Toggle(3, 2);
+        _life.Toggle(4, 2);
+        _life.Toggle(4, 1);
+        _life.Toggle(3, 0);
+
+        UpdateCellAndCanvasSize();
+    }
+
+    private void InitData(Cell[][] cells)
+    {
+        _life = new Life(cells, cells => { });
+
+        UpdateCellAndCanvasSize();
+    }
+
+    private void UpdateCellAndCanvasSize()
+    {
+        _cellEdgeAndSpacingLength = Math.Min(PixelWidth / Columns, (PixelHeight - SpaceForButtons) / Rows);
+        _cellEdgeLength = 0.9 * _cellEdgeAndSpacingLength;
+
+        _canvasWidth = _cellEdgeAndSpacingLength * Columns;
+        _canvasHeight = _cellEdgeAndSpacingLength * Rows;
+    }
+
+    private void OnCanvasClick(double pixelX, double pixelY)
+    {
+        if (pixelX < 0 || pixelX > _canvasWidth)
+        {
+            return;
+        }
+        if (pixelY < 0 || pixelY > _canvasHeight)
+        {
+            return;
+        }
+        
+        // Translate pixel coordinates to rows and columns
+        var clickedRow = (int)((pixelY / _canvasHeight) * Rows);
+        var clickedCol = (int)((pixelX / _canvasWidth) * Columns);
+        
+        _life?.Toggle(clickedRow, clickedCol);
+        StateHasChanged();
+    }
+
+    private void OnClear()
+    {
+        InitData();
+        StateHasChanged();
+    }
+
+    private void OnTickClicked()
+    {
+        _life?.Tick();
+    }
+
+    private async Task OnDownload()
+    {
+        var cellsJsonStr = JsonSerializer.Serialize(_life?.Cells);
+        var fileName = $"game state {DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}.json";
+        await _jsRuntime.InvokeAsync<bool>("downloadStringAsFile", cellsJsonStr, fileName);
+    }
+
+    private async Task OnSelectedFileChanged(InputFileChangeEventArgs eventArgs)
+    {
+        if (!eventArgs.File.Name.EndsWith(".json"))
+        {
+            Console.WriteLine("Stick to JSON files");
+            return;
+        }
+
+        using var fileStream = eventArgs.File.OpenReadStream();
+        var deserializedCells = await JsonSerializer.DeserializeAsync<Cell[][]>(fileStream);
+        if (deserializedCells == null)
+        {
+            Console.WriteLine("Couldn't deserialize the cells. So sad.");
+        }
+
+        if (deserializedCells.Length != Rows || deserializedCells[0].Length != Columns)
+        {
+            Console.WriteLine($"Expected to load cells with {Rows} rows and {Columns} columns");
+            return;
+        }
+        InitData(deserializedCells);
+        StateHasChanged();
+    }
+
+        private const int SpaceForButtons = 30;
+}
+
+@if (_life != null)
+{
+    <div @onclick=@(e => { OnCanvasClick(e.OffsetX, e.OffsetY); })>
+        <BECanvas Width="@_canvasWidth" Height="_canvasHeight" @ref="_canvasReference"></BECanvas>
+    </div>
+
+        <button @onclick=@(e => OnClear()) class="btn btn-primary">Clear</button>
+        <button @onclick=@(e => OnTickClicked()) class="btn btn-primary">Tick</button>
+        <button @onclick=@OnDownload class="btn btn-primary">Save</button>
+        <InputFile OnChange="@OnSelectedFileChanged" class="btn"></InputFile>
+}
+else
+{
+    <div>no life</div>
+}
