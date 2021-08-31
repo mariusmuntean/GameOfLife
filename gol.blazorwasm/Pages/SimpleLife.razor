@@ -54,7 +54,7 @@
     {
         _life = new Life(Rows, Columns, cells => { });
 
-    // Glider
+        // Glider
         _life.Toggle(2, 2);
         _life.Toggle(3, 2);
         _life.Toggle(4, 2);
@@ -91,7 +91,7 @@
             return;
         }
 
-    // Translate pixel coordinates to rows and columns
+        // Translate pixel coordinates to rows and columns
         var clickedRow = (int)((pixelY / _canvasHeight) * Rows);
         var clickedCol = (int)((pixelX / _canvasWidth) * Columns);
 
@@ -137,7 +137,7 @@
             Console.WriteLine($"Expected to load cells with {Rows} rows and {Columns} columns");
             return;
         }
-        
+
         InitData(deserializedCells);
         StateHasChanged();
     }
