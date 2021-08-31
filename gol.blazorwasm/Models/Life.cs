@@ -12,9 +12,7 @@ namespace gol.blazorwasm.Models
         private readonly int _rows;
         private readonly int _cols;
 
-        private readonly CellsChanged _onNewGeneration;
-
-        public Life(int rows, int cols, CellsChanged onNewGeneration = null)
+        public Life(int rows, int cols)
         {
             if (rows <= 0 || cols <= 0)
             {
@@ -32,8 +30,6 @@ namespace gol.blazorwasm.Models
                     _cells[row][col] = new Cell(CellState.Dead);
                 }
             }
-
-            _onNewGeneration = onNewGeneration;
         }
 
         public Life(Cell[][] initialCells, CellsChanged onNewGeneration = null)
@@ -49,7 +45,6 @@ namespace gol.blazorwasm.Models
             _cells = initialCells;
             _rows = newRows;
             _cols = newCols;
-            _onNewGeneration = onNewGeneration;
         }
 
         public Cell[][] Cells => _cells;
@@ -90,8 +85,6 @@ namespace gol.blazorwasm.Models
                     currentCell.Tick();
                 }
             }
-
-            _onNewGeneration?.Invoke(_cells);
         }
 
         public void Toggle(int row, int col)
@@ -100,13 +93,13 @@ namespace gol.blazorwasm.Models
             {
                 throw new ArgumentOutOfRangeException(nameof(row), row, "Row value invalid");
             }
+
             if (col < 0 || col >= _cols)
             {
                 throw new ArgumentOutOfRangeException(nameof(col), col, "Column value invalid");
             }
 
             _cells[row][col].Toggle();
-            _onNewGeneration?.Invoke(_cells);
         }
 
         private List<Cell> GetCellNeighbors(int row, int col)
