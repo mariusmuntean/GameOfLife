@@ -49,9 +49,24 @@ namespace gol.blazorwasm.Models
 
         public Cell[][] Cells => _cells;
 
+        public void Toggle(int row, int col)
+        {
+            if (row < 0 || row >= _rows)
+            {
+                throw new ArgumentOutOfRangeException(nameof(row), row, "Row value invalid");
+            }
+
+            if (col < 0 || col >= _cols)
+            {
+                throw new ArgumentOutOfRangeException(nameof(col), col, "Column value invalid");
+            }
+
+            _cells[row][col].Toggle();
+        }
+
         public void Tick()
         {
-            // Compute the next state for foreach cell
+            // Compute the next state for each cell
             for (var row = 0; row < _rows; row++)
             {
                 for (var col = 0; col < _cols; col++)
@@ -85,21 +100,6 @@ namespace gol.blazorwasm.Models
                     currentCell.Tick();
                 }
             }
-        }
-
-        public void Toggle(int row, int col)
-        {
-            if (row < 0 || row >= _rows)
-            {
-                throw new ArgumentOutOfRangeException(nameof(row), row, "Row value invalid");
-            }
-
-            if (col < 0 || col >= _cols)
-            {
-                throw new ArgumentOutOfRangeException(nameof(col), col, "Column value invalid");
-            }
-
-            _cells[row][col].Toggle();
         }
 
         private List<Cell> GetCellNeighbors(int row, int col)
