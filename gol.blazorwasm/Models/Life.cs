@@ -4,8 +4,6 @@ using System.Linq;
 
 namespace gol.blazorwasm.Models
 {
-    using CellsChanged = Action<Cell[][]>;
-
     public class Life
     {
         private readonly Cell[][] _cells;
@@ -32,7 +30,7 @@ namespace gol.blazorwasm.Models
             }
         }
 
-        public Life(Cell[][] initialCells, CellsChanged onNewGeneration = null)
+        public Life(Cell[][] initialCells)
         {
             var newRows = initialCells.GetLength(0);
             var newCols = initialCells.GetLength(0);
