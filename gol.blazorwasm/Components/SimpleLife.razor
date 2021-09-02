@@ -96,7 +96,6 @@
         var clickedCol = (int)((pixelX / _canvasWidth) * Columns);
 
         _life?.Toggle(clickedRow, clickedCol);
-        StateHasChanged();
     }
 
     private void OnClear()
@@ -158,5 +157,5 @@
 }
 else
 {
-    <div>no life</div>
+    <div>get a Life</div>
 }
