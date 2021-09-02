@@ -4,17 +4,13 @@ using System.Linq;
 
 namespace gol.blazorwasm.Models
 {
-    using CellsChanged = Action<Cell[][]>;
-
     public class Life
     {
         private readonly Cell[][] _cells;
         private readonly int _rows;
         private readonly int _cols;
 
-        private readonly CellsChanged _onNewGeneration;
-
-        public Life(int rows, int cols, CellsChanged onNewGeneration = null)
+        public Life(int rows, int cols)
         {
             if (rows <= 0 || cols <= 0)
             {
@@ -32,11 +28,9 @@ namespace gol.blazorwasm.Models
                     _cells[row][col] = new Cell(CellState.Dead);
                 }
             }
-
-            _onNewGeneration = onNewGeneration;
         }
 
-        public Life(Cell[][] initialCells, CellsChanged onNewGeneration = null)
+        public Life(Cell[][] initialCells)
         {
             var newRows = initialCells.GetLength(0);
             var newCols = initialCells.GetLength(0);
@@ -49,14 +43,28 @@ namespace gol.blazorwasm.Models
             _cells = initialCells;
             _rows = newRows;
             _cols = newCols;
-            _onNewGeneration = onNewGeneration;
         }
 
         public Cell[][] Cells => _cells;
 
+        public void Toggle(int row, int col)
+        {
+            if (row < 0 || row >= _rows)
+            {
+                throw new ArgumentOutOfRangeException(nameof(row), row, "Row value invalid");
+            }
+
+            if (col < 0 || col >= _cols)
+            {
+                throw new ArgumentOutOfRangeException(nameof(col), col, "Column value invalid");
+            }
+
+            _cells[row][col].Toggle();
+        }
+
         public void Tick()
         {
-            // Compute the next state for foreach cell
+            // Compute the next state for each cell
             for (var row = 0; row < _rows; row++)
             {
                 for (var col = 0; col < _cols; col++)
@@ -90,23 +98,6 @@ namespace gol.blazorwasm.Models
                     currentCell.Tick();
                 }
             }
-
-            _onNewGeneration?.Invoke(_cells);
-        }
-
-        public void Toggle(int row, int col)
-        {
-            if (row < 0 || row >= _rows)
-            {
-                throw new ArgumentOutOfRangeException(nameof(row), row, "Row value invalid");
-            }
-            if (col < 0 || col >= _cols)
-            {
-                throw new ArgumentOutOfRangeException(nameof(col), col, "Column value invalid");
-            }
-
-            _cells[row][col].Toggle();
-            _onNewGeneration?.Invoke(_cells);
         }
 
         private List<Cell> GetCellNeighbors(int row, int col)
