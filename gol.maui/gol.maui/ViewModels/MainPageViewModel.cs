@@ -19,9 +19,11 @@ namespace gol.maui.ViewModels
             Life.Toggle(3, 0);
 
             CellClickedCommand = new Command<Models.Cell>(cell => cell.Toggle(), cell => cell is not null);
+            TickCommand = new Command(() => Life?.Tick(), () => Life is not null);
         }
 
         public Command<Models.Cell> CellClickedCommand { get; set; }
+        public Command TickCommand { get; set; }
 
         public Life Life
         {

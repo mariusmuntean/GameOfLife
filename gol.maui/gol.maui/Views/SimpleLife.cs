@@ -121,21 +121,11 @@ namespace gol.maui.Views
                 }
             };
 
-            // Use a DataTrigger to toggle the BoxView color to red when the cell's current state is Alive
-            DataTrigger trigger = new DataTrigger(typeof(BoxView));
-            trigger.Binding = new Binding()
-            {
-                Source = currentCell,
-                Path = nameof(Models.Cell.CurrentState)
-            };
-            trigger.Value = Models.CellState.Alive;
-            trigger.Setters.Add(new Setter
-            {
-                Property = BoxView.ColorProperty,
-                Value = Colors.Red
-            });
-
-            boxView.Triggers.Add(trigger);
+            // Use DataTriggers to toggle the BoxView color to red/black when the cell's current state is Alive/Dead
+            DataTrigger aliveStateTrigger = GetColorTrigger(currentCell, Models.CellState.Alive, Colors.Red);
+            DataTrigger deadStateTrigger = GetColorTrigger(currentCell, Models.CellState.Dead, Colors.Black);
+            boxView.Triggers.Add(aliveStateTrigger);
+            boxView.Triggers.Add(deadStateTrigger);
 
             // When the BoxView is clicked, invoke the ClickedCommand command
             var clickGestureRecognizer = new TapGestureRecognizer();
@@ -146,6 +136,23 @@ namespace gol.maui.Views
             boxView.GestureRecognizers.Add(clickGestureRecognizer);
 
             return boxView;
+        }
+
+        private static DataTrigger GetColorTrigger(Models.Cell currentCell, Models.CellState cellStateToTriggerOn, Color backgroundColor)
+        {
+            DataTrigger trigger = new DataTrigger(typeof(BoxView));
+            trigger.Binding = new Binding()
+            {
+                Source = currentCell,
+                Path = nameof(Models.Cell.CurrentState)
+            };
+            trigger.Value = cellStateToTriggerOn;
+            trigger.Setters.Add(new Setter
+            {
+                Property = BoxView.ColorProperty,
+                Value = backgroundColor
+            });
+            return trigger;
         }
     }
 }

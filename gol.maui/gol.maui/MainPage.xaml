@@ -9,9 +9,16 @@
         <ViewModels:MainPageViewModel />
     </ContentPage.BindingContext>
 
-    <Views:SimpleLife Grid.Row="1"
-                      VerticalOptions="FillAndExpand"
-                      HorizontalOptions="FillAndExpand"
-                      Cells="{Binding Life.Cells}"
-                      ClickedCommand="{Binding CellClickedCommand}"/>
+    <Grid RowDefinitions="*, Auto">
+        <Views:SimpleLife GridLayout.Row="0"
+                          VerticalOptions="FillAndExpand"
+                          HorizontalOptions="FillAndExpand"
+                          Cells="{Binding Life.Cells}"
+                          ClickedCommand="{Binding CellClickedCommand}" />
+        <StackLayout GridLayout.Row="1"
+                     Orientation="Horizontal"
+                     BackgroundColor="CadetBlue">
+            <Button Text="Tick" Command="{Binding TickCommand}" />
+        </StackLayout>
+    </Grid>
 </ContentPage>
