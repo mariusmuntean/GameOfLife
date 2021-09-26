@@ -1,17 +1,14 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;
-using Application = Microsoft.Maui.Controls.Application;
+﻿using Application = Microsoft.Maui.Controls.Application;
 
 namespace gol.maui
 {
     public partial class App : Application
     {
-        public App()
+        public App(MainPage mainPage)
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = mainPage;
         }
     }
 }
