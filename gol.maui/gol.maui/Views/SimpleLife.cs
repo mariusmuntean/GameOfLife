@@ -102,7 +102,7 @@ namespace gol.maui.Views
 
         private View GetViewForCell(Models.Cell currentCell)
         {
-            return new BoxView()
+            BoxView boxView = new BoxView()
             {
                 Color = currentCell.CurrentState switch
                 {
@@ -111,6 +111,23 @@ namespace gol.maui.Views
                     _ => Colors.White
                 }
             };
+
+            DataTrigger trigger = new DataTrigger(typeof(BoxView));
+            trigger.Binding = new Binding()
+            {
+                Source = currentCell,
+                Path = "CurrentState"
+            };
+            trigger.Value = Models.CellState.Alive;
+            trigger.Setters.Add(new Setter
+            {
+                Property = BoxView.ColorProperty,
+                Value = Colors.Red
+            });
+
+            boxView.Triggers.Add(trigger);
+
+            return boxView;
         }
     }
 }

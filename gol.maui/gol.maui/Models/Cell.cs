@@ -1,10 +1,13 @@
+using Microsoft.Maui.Controls;
 using System;
 using System.Text.Json.Serialization;
 
 namespace gol.maui.Models
 {
-    public class Cell
+    public class Cell : BindableObject
     {
+        private CellState currentState = CellState.Dead;
+
         /// <summary>
         /// For the deserializer.
         /// </summary>
@@ -21,7 +24,21 @@ namespace gol.maui.Models
         {
         }
 
-        public CellState CurrentState { get; private set; } = CellState.Dead;
+        public CellState CurrentState
+        {
+            get => currentState;
+            private set
+            {
+                if (currentState == value)
+                {
+                    return;
+                }
+                
+                currentState = value;
+                OnPropertyChanged();
+            }
+        }
+
         public CellState NextState { get; set; } = CellState.Dead;
 
         public void Tick()

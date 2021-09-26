@@ -1,5 +1,6 @@
 ﻿using gol.maui.Models;
 using Microsoft.Maui.Controls;
+using System;
 
 namespace gol.maui.ViewModels
 {
@@ -17,6 +18,12 @@ namespace gol.maui.ViewModels
             Life.Toggle(4, 2);
             Life.Toggle(4, 1);
             Life.Toggle(3, 0);
+
+            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+            {
+                Life.Toggle(11, 11);
+                return false;
+            });
         }
 
         public Life Life
