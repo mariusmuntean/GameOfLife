@@ -9,12 +9,8 @@
         <ViewModels:MainPageViewModel />
     </ContentPage.BindingContext>
 
-    <ScrollView Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
-
-        <Views:SimpleLife Grid.Row="1"
-                              BackgroundColor="Aqua"
-                              VerticalOptions="Center"
-                              HorizontalOptions="Center"
+    <Views:SimpleLife Grid.Row="1"
+                              VerticalOptions="FillAndExpand"
+                              HorizontalOptions="FillAndExpand"
                               Cells="{Binding Life.Cells}"/>
-    </ScrollView>
 </ContentPage>

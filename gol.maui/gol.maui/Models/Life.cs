@@ -33,7 +33,7 @@ namespace gol.maui.Models
         public Life(Cell[][] initialCells)
         {
             var newRows = initialCells.GetLength(0);
-            var newCols = initialCells.GetLength(0);
+            var newCols = initialCells[0].GetLength(0);
 
             if (newRows <= 0 || newCols <= 0)
             {
