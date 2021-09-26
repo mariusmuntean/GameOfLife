@@ -10,7 +10,8 @@
     </ContentPage.BindingContext>
 
     <Views:SimpleLife Grid.Row="1"
-                              VerticalOptions="FillAndExpand"
-                              HorizontalOptions="FillAndExpand"
-                              Cells="{Binding Life.Cells}"/>
+                      VerticalOptions="FillAndExpand"
+                      HorizontalOptions="FillAndExpand"
+                      Cells="{Binding Life.Cells}"
+                      ClickedCommand="{Binding CellClickedCommand}"/>
 </ContentPage>

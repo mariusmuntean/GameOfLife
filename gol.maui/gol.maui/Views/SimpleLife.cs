@@ -8,7 +8,7 @@ namespace gol.maui.Views
 {
     public class SimpleLife : ContentView
     {
-        RelativeLayout _relativeLayout;
+        private readonly RelativeLayout _relativeLayout;
 
         public SimpleLife()
         {
@@ -33,6 +33,15 @@ namespace gol.maui.Views
             get => (Models.Cell[][])GetValue(CellsProperty);
             set => SetValue(CellsProperty, value);
         }
+
+        public static BindableProperty ClickedCommandProperty = BindableProperty.Create(
+            nameof(ClickedCommand),
+            typeof(Command<Models.Cell>),
+            typeof(SimpleLife),
+            null
+            );
+
+        public Command<Models.Cell> ClickedCommand { get => (Command<Models.Cell>)GetValue(ClickedCommandProperty); set => SetValue(ClickedCommandProperty, value); }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -112,11 +121,12 @@ namespace gol.maui.Views
                 }
             };
 
+            // Use a DataTrigger to toggle the BoxView color to red when the cell's current state is Alive
             DataTrigger trigger = new DataTrigger(typeof(BoxView));
             trigger.Binding = new Binding()
             {
                 Source = currentCell,
-                Path = "CurrentState"
+                Path = nameof(Models.Cell.CurrentState)
             };
             trigger.Value = Models.CellState.Alive;
             trigger.Setters.Add(new Setter
@@ -126,6 +136,14 @@ namespace gol.maui.Views
             });
 
             boxView.Triggers.Add(trigger);
+
+            // When the BoxView is clicked, invoke the ClickedCommand command
+            var clickGestureRecognizer = new TapGestureRecognizer();
+            clickGestureRecognizer.Tapped += (s, e) =>
+            {
+                this.ClickedCommand?.Execute(currentCell);
+            };
+            boxView.GestureRecognizers.Add(clickGestureRecognizer);
 
             return boxView;
         }
