@@ -1,4 +1,9 @@
-﻿using Application = Microsoft.Maui.Controls.Application;
+﻿using gol.maui.Views;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using System;
+using Application = Microsoft.Maui.Controls.Application;
 
 namespace gol.maui
 {
@@ -8,7 +13,22 @@ namespace gol.maui
         {
             InitializeComponent();
 
+#if WINDOWS10_0_19041_0
+            Microsoft.Maui.Handlers.ViewHandler.ViewMapper.Add("x", (handler, view) =>
+            {
+                if(view is SimpleLife2)
+                {
+                    handler.NativeView.Tapped += SimpleLifeTapped;
+                }
+            });
+#endif
+
             MainPage = mainPage;
+        }
+
+        private void SimpleLifeTapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            Console.WriteLine(e.GetPosition(null));
         }
     }
 }

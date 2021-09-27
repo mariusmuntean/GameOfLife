@@ -10,7 +10,7 @@
     </ContentPage.BindingContext>
 
     <Grid RowDefinitions="*, Auto">
-        <Views:SimpleLife GridLayout.Row="0"
+        <Views:SimpleLife2 GridLayout.Row="0"
                           VerticalOptions="FillAndExpand"
                           HorizontalOptions="FillAndExpand"
                           Cells="{Binding Life.Cells}"
@@ -19,6 +19,7 @@
                      Orientation="Horizontal"
                      BackgroundColor="CadetBlue">
             <Button Text="Tick" Command="{Binding TickCommand}" />
+            <Button Text="Clear" Command="{Binding ClearCommand}" />
         </StackLayout>
     </Grid>
 </ContentPage>

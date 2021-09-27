@@ -8,17 +8,25 @@ namespace gol.maui.Views
 {
     public class SimpleLife : ContentView
     {
-        private readonly RelativeLayout _relativeLayout;
+        private RelativeLayout _relativeLayout;
 
         public SimpleLife()
         {
-            _relativeLayout = new RelativeLayout();
-            _relativeLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
-            _relativeLayout.VerticalOptions = LayoutOptions.FillAndExpand;
+            InitContent();
 
-            Content = _relativeLayout;
             VerticalOptions = LayoutOptions.FillAndExpand;
             HorizontalOptions = LayoutOptions.FillAndExpand;
+        }
+
+        private void InitContent()
+        {
+            _relativeLayout = new RelativeLayout
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+
+            Content = _relativeLayout;
         }
 
         public static BindableProperty CellsProperty = BindableProperty.Create(
@@ -60,11 +68,8 @@ namespace gol.maui.Views
 
         private void RedrawChildren()
         {
-            if (Cells is null)
-            {
-                _relativeLayout.Children.Clear();
-            }
-            else
+            InitContent();
+            if (Cells is not null)
             {
                 var rows = Cells.GetLength(0);
                 var cols = Cells[0].GetLength(0);
@@ -111,6 +116,7 @@ namespace gol.maui.Views
 
         private View GetViewForCell(Models.Cell currentCell)
         {
+
             BoxView boxView = new BoxView()
             {
                 Color = currentCell.CurrentState switch

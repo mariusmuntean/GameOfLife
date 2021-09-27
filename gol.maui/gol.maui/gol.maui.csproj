@@ -43,6 +43,13 @@
 		<PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.0.0-experimental1" />
 		<PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.0.0-experimental1" />
 		<PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.0.0-experimental1" NoWarn="NU1701" />
+		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.0.26-experimental1" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows10.0.19041'">
+	  <PackageReference Include="Microsoft.Maui.Graphics.Win2D.WinUI.Desktop">
+	    <Version>6.0.100-rc.1.413</Version>
+	  </PackageReference>
 	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">

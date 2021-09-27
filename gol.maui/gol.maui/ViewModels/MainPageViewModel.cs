@@ -20,10 +20,15 @@ namespace gol.maui.ViewModels
 
             CellClickedCommand = new Command<Models.Cell>(cell => cell.Toggle(), cell => cell is not null);
             TickCommand = new Command(() => Life?.Tick(), () => Life is not null);
+            ClearCommand = new Command(() =>
+            {
+                Life = new Life(Life?.Cells.GetLength(0) ?? 10, Life?.Cells[0]?.GetLength(0) ?? 10);
+            });
         }
 
         public Command<Models.Cell> CellClickedCommand { get; set; }
         public Command TickCommand { get; set; }
+        public Command ClearCommand { get; set; }
 
         public Life Life
         {
