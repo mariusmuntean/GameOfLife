@@ -1,5 +1,8 @@
-﻿using Microsoft.Maui.Controls;
+﻿using gol.maui.Extensions;
+using gol.maui.Models;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Handlers;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -7,6 +10,9 @@ namespace gol.maui.Views
 {
     public class SimpleLife2 : ContentView
     {
+        GraphicsView _cellGraphics;
+        CellsDrawable _cellsDrawable;
+
         public SimpleLife2()
         {
             InitContent();
@@ -19,64 +25,56 @@ namespace gol.maui.Views
         {
             // ToDo: migrate from RelativeLayout to GraphicsView + custom handler for determining the exact click location
 
-            GraphicsView graphicsView = new GraphicsView
+            _cellsDrawable = new CellsDrawable(Cells);
+            _cellGraphics = new GraphicsView()
             {
-                Drawable = new c(Cells),
+                Drawable = _cellsDrawable,
             };
 
-            Content = graphicsView;
-        }
+            Content = _cellGraphics;
 
-        class c : IDrawable
-        {
-            public c(Models.Cell[][] cells)
+
+            if (Cells is not null)
             {
-                Cells = cells;
-            }
+                var rows = Cells.GetLength(0);
+                var cols = Cells[0].GetLength(0);
 
-            public Models.Cell[][] Cells { get; }
-
-            public void Draw(ICanvas canvas, RectangleF dirtyRect)
-            {
-                if (Cells is not null)
+                for (var row = 0; row < rows; row++)
                 {
-                    var rows = Cells.GetLength(0);
-                    var cols = Cells[0].GetLength(0);
-
-                    var (CellEdgeLength, CellEdgeLengthWithSpacing) = GetCellEdgeLengths(dirtyRect, rows, cols);
-
-                    for (var row = 0; row < rows; row++)
+                    for (var col = 0; col < cols; col++)
                     {
-                        for (var col = 0; col < cols; col++)
+                        var currentCell = Cells[row][col];
+
+                        DataTrigger trigger = new DataTrigger(typeof(SimpleLife2));
+                        trigger.Binding = new Binding()
                         {
-                            var localRow = row;
-                            var localCol = col;
-                            var currentCell = Cells[row][col];
+                            Source = currentCell,
+                            Path = nameof(Models.Cell.CurrentState)
+                        };
+                        trigger.Value = CellState.Alive;
+                        trigger.EnterActions.Add(new CC(() =>
+                        {
+                            _cellGraphics.Invalidate();
+                        }));
 
-                            canvas.FillColor = currentCell.CurrentState switch
-                            {
-                                Models.CellState.Dead => Colors.Black,
-                                Models.CellState.Alive => Colors.Red,
-                            };
-                            canvas.FillRectangle(
-                                col * CellEdgeLengthWithSpacing,
-                                row * CellEdgeLengthWithSpacing,
-                                CellEdgeLength,
-                                CellEdgeLength
-                                );
-
-                        }
+                        this.Triggers.Add(trigger);
                     }
                 }
             }
 
-            private (float CellEdgeLength, float CellEdgeLengthWithSpacing) GetCellEdgeLengths(RectangleF parent, int rows, int cols)
-            {
-                var horizontalCellEdgeLengthWithSpacing = parent.Width / cols;
-                var verticalCellEdgeLengthWithSpacing = parent.Height / rows;
+        }
 
-                var cellEdgeLengthWithSpacing = Math.Min(horizontalCellEdgeLengthWithSpacing, verticalCellEdgeLengthWithSpacing);
-                return (0.9f * cellEdgeLengthWithSpacing, cellEdgeLengthWithSpacing);
+        class CC : TriggerAction<VisualElement>
+        {
+            private readonly Action action;
+
+            public CC(Action action)
+            {
+                this.action = action;
+            }
+            protected override void Invoke(VisualElement sender)
+            {
+                action?.Invoke();
             }
         }
 
@@ -120,6 +118,57 @@ namespace gol.maui.Views
         private void RedrawChildren()
         {
             InitContent();
+        }
+    }
+
+    class CellsDrawable : IDrawable
+    {
+        public CellsDrawable(Models.Cell[][] cells)
+        {
+            Cells = cells;
+        }
+
+        public Models.Cell[][] Cells { get; }
+
+        public void Draw(ICanvas canvas, RectangleF dirtyRect)
+        {
+            if (Cells is not null)
+            {
+                var rows = Cells.GetLength(0);
+                var cols = Cells[0].GetLength(0);
+
+                var (CellEdgeLength, CellEdgeLengthWithSpacing) = GetCellEdgeLengths(dirtyRect, rows, cols);
+
+                for (var row = 0; row < rows; row++)
+                {
+                    for (var col = 0; col < cols; col++)
+                    {
+                        var currentCell = Cells[row][col];
+
+                        canvas.FillColor = currentCell.CurrentState switch
+                        {
+                            CellState.Dead => Colors.Black,
+                            CellState.Alive => Colors.Red,
+                        };
+                        canvas.FillRectangle(
+                            col * CellEdgeLengthWithSpacing,
+                            row * CellEdgeLengthWithSpacing,
+                            CellEdgeLength,
+                            CellEdgeLength
+                            );
+
+                    }
+                }
+            }
+        }
+
+        private (float CellEdgeLength, float CellEdgeLengthWithSpacing) GetCellEdgeLengths(RectangleF parent, int rows, int cols)
+        {
+            var horizontalCellEdgeLengthWithSpacing = parent.Width / cols;
+            var verticalCellEdgeLengthWithSpacing = parent.Height / rows;
+
+            var cellEdgeLengthWithSpacing = Math.Min(horizontalCellEdgeLengthWithSpacing, verticalCellEdgeLengthWithSpacing);
+            return (0.9f * cellEdgeLengthWithSpacing, cellEdgeLengthWithSpacing);
         }
     }
 }

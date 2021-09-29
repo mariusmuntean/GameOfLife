@@ -16,19 +16,14 @@ namespace gol.maui
 #if WINDOWS10_0_19041_0
             Microsoft.Maui.Handlers.ViewHandler.ViewMapper.Add("x", (handler, view) =>
             {
-                if(view is SimpleLife2)
+                if (view is SimpleLife2)
                 {
-                    handler.NativeView.Tapped += SimpleLifeTapped;
+                    handler.NativeView.Tapped += (s, e) => Console.WriteLine(e.GetPosition(null));
                 }
             });
 #endif
 
             MainPage = mainPage;
-        }
-
-        private void SimpleLifeTapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            Console.WriteLine(e.GetPosition(null));
         }
     }
 }
