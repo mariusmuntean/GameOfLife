@@ -1,5 +1,4 @@
-﻿using gol.maui.Extensions;
-using gol.maui.Models;
+﻿using gol.maui.Models;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
@@ -30,6 +29,7 @@ namespace gol.maui.Views
             {
                 Drawable = _cellsDrawable,
             };
+            //(_cellGraphics.Handler.NativeView as GraphicsViewHandler)?.NativeView.InvalidateDrawable();
 
             Content = _cellGraphics;
 
@@ -54,7 +54,8 @@ namespace gol.maui.Views
                         trigger.Value = CellState.Alive;
                         trigger.EnterActions.Add(new CC(() =>
                         {
-                            _cellGraphics.Invalidate();
+                            //_cellGraphics.Invalidate();
+                            (_cellGraphics.Handler as GraphicsViewHandler)?.NativeView.InvalidateDrawable();
                         }));
 
                         this.Triggers.Add(trigger);
@@ -111,11 +112,6 @@ namespace gol.maui.Views
         }
 
         private void OnCellsChanged()
-        {
-            RedrawChildren();
-        }
-
-        private void RedrawChildren()
         {
             InitContent();
         }
