@@ -12,18 +12,24 @@ namespace gol.maui.ViewModels
             Life = new Life(30, 40);
 
             // Glider
-            Life.Toggle(2, 2);
-            Life.Toggle(3, 2);
-            Life.Toggle(4, 2);
-            Life.Toggle(4, 1);
-            Life.Toggle(3, 0);
+            AddGlider();
 
             CellClickedCommand = new Command<Models.Cell>(cell => cell.Toggle(), cell => cell is not null);
             TickCommand = new Command(() => Life?.Tick(), () => Life is not null);
             ClearCommand = new Command(() =>
             {
                 Life = new Life(Life?.Cells.GetLength(0) ?? 10, Life?.Cells[0]?.GetLength(0) ?? 10);
+                AddGlider();
             });
+        }
+
+        private void AddGlider()
+        {
+            Life.Toggle(2, 2);
+            Life.Toggle(3, 2);
+            Life.Toggle(4, 2);
+            Life.Toggle(4, 1);
+            Life.Toggle(3, 0);
         }
 
         public Command<Models.Cell> CellClickedCommand { get; set; }

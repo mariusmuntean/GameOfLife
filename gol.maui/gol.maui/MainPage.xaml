@@ -16,8 +16,7 @@
                           Cells="{Binding Life.Cells}"
                           ClickedCommand="{Binding CellClickedCommand}" />
         <StackLayout GridLayout.Row="1"
-                     Orientation="Horizontal"
-                     BackgroundColor="CadetBlue">
+                     Orientation="Horizontal">
             <Button Text="Tick" Command="{Binding TickCommand}" />
             <Button Text="Clear" Command="{Binding ClearCommand}" />
         </StackLayout>
