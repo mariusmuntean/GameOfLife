@@ -13,7 +13,7 @@ namespace gol.maui.Extensions
                 gvh.NativeView.Invalidate();
             }
 
-#elif IOS
+#elif __IOS__
             if (graphicView?.Handler is GraphicsViewHandler gvh)
             {
                 gvh.NativeView.InvalidateDrawable();
@@ -23,6 +23,11 @@ namespace gol.maui.Extensions
             if (graphicView?.Handler is GraphicsViewHandler gvh)
             {
                 gvh.NativeView.Invalidate();
+            }
+#elif __MACCATALYST__
+            if (graphicView?.Handler is GraphicsViewHandler gvh)
+            {
+                gvh.NativeView.InvalidateDrawable();
             }
 #endif
         }
