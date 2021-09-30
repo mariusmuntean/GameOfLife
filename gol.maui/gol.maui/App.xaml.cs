@@ -22,6 +22,24 @@ namespace gol.maui
                 }
             });
 #endif
+#if __MACCATALYST__
+
+            Microsoft.Maui.Handlers.ViewHandler.ViewMapper.Add("x", (handler, view) =>
+                        {
+                            if (view is SimpleLife2)
+                            {
+                                UIKit.UITapGestureRecognizer gestureRecognizer = new UIKit.UITapGestureRecognizer(
+                                    g =>
+                                    {
+                                        Console.WriteLine(g.LocationInView(g.View));
+                                        // ToDo: pass the location to the Maui View
+                                    }
+                                    );
+                                handler.NativeView.AddGestureRecognizer(gestureRecognizer);
+                            }
+                        });
+
+#endif
 
             MainPage = mainPage;
         }
