@@ -51,6 +51,12 @@
 	  </PackageReference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Extensions\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Extensions\" />
+	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>

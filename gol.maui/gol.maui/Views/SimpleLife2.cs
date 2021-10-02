@@ -11,7 +11,6 @@ namespace gol.maui.Views
     public class SimpleLife2 : ContentView
     {
         GraphicsView _cellGraphics;
-        CellsDrawable _cellsDrawable;
 
         public SimpleLife2()
         {
@@ -25,11 +24,10 @@ namespace gol.maui.Views
         {
             // ToDo: migrate from RelativeLayout to GraphicsView + custom handler for determining the exact click location
 
-            _cellsDrawable = new CellsDrawable(Cells);
-            _cellGraphics = new GraphicsView()
+            _cellGraphics = new CellsGraphicsView(Cells, (a) =>
             {
-                Drawable = _cellsDrawable,
-            };
+                Console.WriteLine(a);
+            });
 
             Content = _cellGraphics;
 
@@ -113,57 +111,6 @@ namespace gol.maui.Views
         private void OnCellsChanged()
         {
             InitContent();
-        }
-    }
-
-    class CellsDrawable : IDrawable
-    {
-        public CellsDrawable(Models.Cell[][] cells)
-        {
-            Cells = cells;
-        }
-
-        public Models.Cell[][] Cells { get; }
-
-        public void Draw(ICanvas canvas, RectangleF dirtyRect)
-        {
-            if (Cells is not null)
-            {
-                var rows = Cells.GetLength(0);
-                var cols = Cells[0].GetLength(0);
-
-                var (CellEdgeLength, CellEdgeLengthWithSpacing) = GetCellEdgeLengths(dirtyRect, rows, cols);
-
-                for (var row = 0; row < rows; row++)
-                {
-                    for (var col = 0; col < cols; col++)
-                    {
-                        var currentCell = Cells[row][col];
-
-                        canvas.FillColor = currentCell.CurrentState switch
-                        {
-                            CellState.Dead => Colors.Black,
-                            CellState.Alive => Colors.Red,
-                        };
-                        canvas.FillRectangle(
-                            col * CellEdgeLengthWithSpacing,
-                            row * CellEdgeLengthWithSpacing,
-                            CellEdgeLength,
-                            CellEdgeLength
-                            );
-
-                    }
-                }
-            }
-        }
-
-        private (float CellEdgeLength, float CellEdgeLengthWithSpacing) GetCellEdgeLengths(RectangleF parent, int rows, int cols)
-        {
-            var horizontalCellEdgeLengthWithSpacing = parent.Width / cols;
-            var verticalCellEdgeLengthWithSpacing = parent.Height / rows;
-
-            var cellEdgeLengthWithSpacing = Math.Min(horizontalCellEdgeLengthWithSpacing, verticalCellEdgeLengthWithSpacing);
-            return (0.9f * cellEdgeLengthWithSpacing, cellEdgeLengthWithSpacing);
         }
     }
 }
