@@ -1,7 +1,5 @@
-﻿#if __MACCATALYST__
-using Foundation;
-#endif
-using gol.maui.Models;
+﻿using gol.maui.Models;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
@@ -23,13 +21,6 @@ namespace gol.maui.Views
             HorizontalOptions = LayoutOptions.FillAndExpand;
         }
 
-#if __MACCATALYST__
-        [Export("s1")]
-        public void s1(NSObject s)
-        {
-        }
-#endif
-
         private void InitContent()
         {
             // ToDo: migrate from RelativeLayout to GraphicsView + custom handler for determining the exact click location
@@ -39,23 +30,6 @@ namespace gol.maui.Views
             {
                 Drawable = _cellsDrawable,
             };
-
-#if __IOS__
-            (_cellGraphics.Handler as GraphicsViewHandler)?.NativeView.AddGestureRecognizer(
-                new UIKit.UITapGestureRecognizer((e) =>
-                {
-                    Console.WriteLine(e);
-                })
-                );
-#endif
-#if __MACCATALYST__
-            (_cellGraphics.Handler as GraphicsViewHandler)?.NativeView.AddGestureRecognizer(
-                            new UIKit.UITapGestureRecognizer((e) =>
-                            {
-                                Console.WriteLine(e);
-                            })
-                            );
-#endif
 
             Content = _cellGraphics;
 
@@ -80,8 +54,7 @@ namespace gol.maui.Views
                         trigger.Value = CellState.Alive;
                         trigger.EnterActions.Add(new CC(() =>
                         {
-                            //_cellGraphics.Invalidate();
-                            (_cellGraphics.Handler as GraphicsViewHandler)?.NativeView.InvalidateDrawable();
+                            (_cellGraphics.Handler as GraphicsViewHandler)?.NativeView.UpdateDrawable(_cellGraphics);
                         }));
 
                         this.Triggers.Add(trigger);
