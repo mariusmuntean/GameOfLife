@@ -1,5 +1,4 @@
-﻿using gol.maui.ViewHelpers;
-using Application = Microsoft.Maui.Controls.Application;
+﻿using Application = Microsoft.Maui.Controls.Application;
 
 namespace gol.maui
 {
@@ -9,7 +8,7 @@ namespace gol.maui
         {
             InitializeComponent();
 
-            CellsGraphicsViewHelper.AddClickHandler();
+            ViewHelpers.CellsGraphicsViewHelper.AddClickHandler();
 
             MainPage = mainPage;
         }

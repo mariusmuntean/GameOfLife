@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !WINDOWS && !IOS && !MACCATALYST && !ANDROID
+
+using System;
 using gol.maui.Views;
 
 namespace gol.maui.ViewHelpers
@@ -11,3 +13,5 @@ namespace gol.maui.ViewHelpers
         }
     }
 }
+
+#endif

@@ -1,7 +1,7 @@
-﻿#if WINDOWS10_0_19041_0
+﻿#if WINDOWS
 
+using gol.maui.Extensions.Win;
 using gol.maui.Views;
-using Microsoft.Maui.Graphics.Native;
 
 namespace gol.maui.ViewHelpers
 {
@@ -13,7 +13,10 @@ namespace gol.maui.ViewHelpers
                 {
                     if (view is CellsGraphicsView cellsGraphicsView)
                     {
-                        handler.NativeView.Tapped += (s,e) => cellsGraphicsView.HandleClick(e.GetPosition(null));
+                        handler.NativeView.Tapped += (s, e) =>
+                        {
+                            cellsGraphicsView.HandleClick(e.GetPosition(handler.NativeView).AsPointF());
+                        };
                     }
                 });
         }
