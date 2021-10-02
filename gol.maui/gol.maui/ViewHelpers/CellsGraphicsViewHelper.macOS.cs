@@ -1,16 +1,15 @@
 ﻿#if __MACCATALYST__
 
-using System;
 using gol.maui.Views;
 using Microsoft.Maui.Graphics.Native;
 
-namespace gol.maui.Extensions
+namespace gol.maui.ViewHelpers
 {
-    public static class CellsDrawableMacExtensions
+    public static class CellsGraphicsViewHelper
     {
-        public static void AddClickHandler(this CellsGraphicsView cellsDrawable)
+        public static void AddClickHandler()
         {
-            Microsoft.Maui.Handlers.GraphicsViewHandler.ViewMapper.Add("x", (handler, view) =>
+            Microsoft.Maui.Handlers.GraphicsViewHandler.ViewMapper.Add("ClickFoo", (handler, view) =>
                 {
                     if (view is CellsGraphicsView cellsGraphicsView)
                     {

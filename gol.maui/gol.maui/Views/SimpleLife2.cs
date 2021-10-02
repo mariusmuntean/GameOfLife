@@ -96,7 +96,11 @@ namespace gol.maui.Views
             null
             );
 
-        public Command<Models.Cell> ClickedCommand { get => (Command<Models.Cell>)GetValue(ClickedCommandProperty); set => SetValue(ClickedCommandProperty, value); }
+        public Command<Models.Cell> ClickedCommand
+        {
+            get => (Command<Models.Cell>)GetValue(ClickedCommandProperty);
+            set => SetValue(ClickedCommandProperty, value);
+        }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

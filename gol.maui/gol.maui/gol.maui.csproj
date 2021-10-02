@@ -55,7 +55,7 @@
 	  <None Remove="Extensions\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Extensions\" />
+	  <Folder Include="ViewHelpers\" />
 	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>
