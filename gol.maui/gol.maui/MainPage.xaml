@@ -22,8 +22,8 @@
                                 Command="{Binding TickCommand}" />
                         <Button Text="Clear"
                                 Command="{Binding ClearCommand}" />
-                        <Button Text="Save"
-                                Command="{Binding SaveCommand}"></Button>
+                        <Button Text="Open"
+                                Command="{Binding OpenCommand}"></Button>
                 </StackLayout>
         </Grid>
 </ContentPage>

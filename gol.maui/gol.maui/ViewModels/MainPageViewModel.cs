@@ -1,5 +1,7 @@
-﻿using gol.maui.Models;
+﻿using System;
+using gol.maui.Models;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Essentials;
 
 namespace gol.maui.ViewModels
 {
@@ -21,6 +23,15 @@ namespace gol.maui.ViewModels
                 Life = new Life(Life?.Cells.GetLength(0) ?? 10, Life?.Cells[0]?.GetLength(0) ?? 10);
                 AddGlider();
             });
+            OpenCommand = new Command(async () =>
+            {
+                
+                var r = await FilePicker.PickAsync(new PickOptions
+                {
+                    
+                });
+                Console.WriteLine(r.FullPath);
+            });
         }
 
         private void AddGlider()
@@ -35,6 +46,7 @@ namespace gol.maui.ViewModels
         public Command<Models.Cell> CellClickedCommand { get; set; }
         public Command TickCommand { get; set; }
         public Command ClearCommand { get; set; }
+        public Command OpenCommand { get; set; }
 
         public Life Life
         {
