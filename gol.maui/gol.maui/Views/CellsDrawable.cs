@@ -1,6 +1,6 @@
-﻿using gol.maui.Models;
+﻿using System;
+using gol.maui.Models;
 using Microsoft.Maui.Graphics;
-using System;
 
 namespace gol.maui.Views
 {

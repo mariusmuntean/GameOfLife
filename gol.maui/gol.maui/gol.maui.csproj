@@ -53,9 +53,18 @@
 
 	<ItemGroup>
 	  <None Remove="Extensions\" />
+	  <None Remove="Platforms\Android\CellsGraphicsViewHelper.macOS.cs" />
+	  <None Remove="Platforms\MacCatalyst\CellsGraphicsViewHelper.macOS.cs" />
+	  <None Remove="Platforms\Windows\CellsGraphicsViewHelper.Windows.cs" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="ViewHelpers\" />
+	  <Compile Include="Platforms\Android\CellsGraphicsViewHelper.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+	  <Compile Include="Platforms\iOS\CellsGraphicsViewHelper.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+	  <Compile Include="Platforms\MacCatalyst\CellsGraphicsViewHelper.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+	  <Compile Include="Platforms\Windows\CellsGraphicsViewHelper.Windows.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+	</ItemGroup>
+	<ItemGroup>
+	  <_MauiCompileToAdd Remove="Platforms\iOS\CellsGraphicsViewHelper.macOS.cs" />
 	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>

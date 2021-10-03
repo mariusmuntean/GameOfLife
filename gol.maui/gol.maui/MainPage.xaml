@@ -1,25 +1,29 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:Views="clr-namespace:gol.maui.Views"
-             xmlns:ViewModels="clr-namespace:gol.maui.ViewModels"
-             x:Class="gol.maui.MainPage"
-             BackgroundColor="{DynamicResource SecondaryColor}">
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:Views="clr-namespace:gol.maui.Views"
+        xmlns:ViewModels="clr-namespace:gol.maui.ViewModels"
+        x:Class="gol.maui.MainPage"
+        BackgroundColor="{DynamicResource SecondaryColor}">
 
-    <ContentPage.BindingContext>
-        <ViewModels:MainPageViewModel />
-    </ContentPage.BindingContext>
+        <ContentPage.BindingContext>
+                <ViewModels:MainPageViewModel />
+        </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="*, Auto">
-        <Views:SimpleLife2 GridLayout.Row="0"
-                          VerticalOptions="FillAndExpand"
-                          HorizontalOptions="FillAndExpand"
-                           Padding="45"
-                          Cells="{Binding Life.Cells}"
-                          ClickedCommand="{Binding CellClickedCommand}" />
-        <StackLayout GridLayout.Row="1"
-                     Orientation="Horizontal">
-            <Button Text="Tick" Command="{Binding TickCommand}" />
-            <Button Text="Clear" Command="{Binding ClearCommand}" />
-        </StackLayout>
-    </Grid>
+        <Grid RowDefinitions="*, Auto">
+                <Views:SimpleLife2 GridLayout.Row="0"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        Padding="15"
+                        Cells="{Binding Life.Cells}"
+                        ClickedCommand="{Binding CellClickedCommand}" />
+                <StackLayout GridLayout.Row="1"
+                        Orientation="Horizontal">
+                        <Button Text="Tick"
+                                Command="{Binding TickCommand}" />
+                        <Button Text="Clear"
+                                Command="{Binding ClearCommand}" />
+                        <Button Text="Save"
+                                Command="{Binding SaveCommand}"></Button>
+                </StackLayout>
+        </Grid>
 </ContentPage>

@@ -13,6 +13,7 @@ namespace gol.maui.Views
         {
             _cellsDrawable = new CellsDrawable(cells);
             Drawable = _cellsDrawable;
+
             _onCellLocationClickedAction = onCellLocationClicked;
         }
 
