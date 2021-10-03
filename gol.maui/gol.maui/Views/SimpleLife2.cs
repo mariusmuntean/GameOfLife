@@ -24,9 +24,9 @@ namespace gol.maui.Views
         {
             // ToDo: migrate from RelativeLayout to GraphicsView + custom handler for determining the exact click location
 
-            _cellGraphics = new CellsGraphicsView(Cells, (a) =>
+            _cellGraphics = new CellsGraphicsView(Cells, cellCoordinated =>
             {
-                Console.WriteLine(a);
+                this.ClickedCommand?.Execute(Cells[cellCoordinated.row][cellCoordinated.column]);
             });
 
             Content = _cellGraphics;
