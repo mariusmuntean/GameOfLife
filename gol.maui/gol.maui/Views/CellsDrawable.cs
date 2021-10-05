@@ -78,14 +78,14 @@ namespace gol.maui.Views
             // I'll translate the clickLocation point as well
             var clickLocationAtOrigin = clickLocation.Offset(-xDiff, -yDiff);
 
-            // Let's consider the cell edg with the spacing such that even clicking between cells will assign the click to a cell
+            // Let's consider the cell edge with the spacing such that even clicking between cells will assign the click to a cell
             var col = (int)Math.Truncate(clickLocationAtOrigin.X / _lastCellEdgeLengthts.Value.cellEdgeLengthWithSpacing);
             var row = (int)Math.Truncate(clickLocationAtOrigin.Y / _lastCellEdgeLengthts.Value.cellEdgeLengthWithSpacing);
 
             return (row, col);
         }
 
-        private (float CellEdgeLength, float CellEdgeLengthWithSpacing) GetCellEdgeLengths(RectangleF parent, int rows, int cols)
+        private static (float CellEdgeLength, float CellEdgeLengthWithSpacing) GetCellEdgeLengths(RectangleF parent, int rows, int cols)
         {
             var horizontalCellEdgeLengthWithSpacing = parent.Width / cols;
             var verticalCellEdgeLengthWithSpacing = parent.Height / rows;

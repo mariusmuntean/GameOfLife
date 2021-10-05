@@ -1,10 +1,10 @@
-﻿using gol.maui.Models;
+﻿using System;
+using System.Runtime.CompilerServices;
+using gol.maui.Models;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
-using System;
-using System.Runtime.CompilerServices;
 
 namespace gol.maui.Views
 {
@@ -43,13 +43,15 @@ namespace gol.maui.Views
                     {
                         var currentCell = Cells[row][col];
 
-                        DataTrigger trigger = new DataTrigger(typeof(SimpleLife2));
-                        trigger.Binding = new Binding()
+                        DataTrigger trigger = new(typeof(SimpleLife2))
                         {
-                            Source = currentCell,
-                            Path = nameof(Models.Cell.CurrentState)
+                            Binding = new Binding()
+                            {
+                                Source = currentCell,
+                                Path = nameof(Models.Cell.CurrentState)
+                            },
+                            Value = CellState.Alive
                         };
-                        trigger.Value = CellState.Alive;
                         trigger.EnterActions.Add(new CC(() =>
                         {
                             (_cellGraphics.Handler as GraphicsViewHandler)?.NativeView.UpdateDrawable(_cellGraphics);
@@ -79,7 +81,7 @@ namespace gol.maui.Views
         public static BindableProperty CellsProperty = BindableProperty.Create(
             nameof(Cells),
             typeof(Models.Cell[][]),
-            typeof(SimpleLife),
+            typeof(SimpleLife2),
             null
             );
 
@@ -92,7 +94,7 @@ namespace gol.maui.Views
         public static BindableProperty ClickedCommandProperty = BindableProperty.Create(
             nameof(ClickedCommand),
             typeof(Command<Models.Cell>),
-            typeof(SimpleLife),
+            typeof(SimpleLife2),
             null
             );
 

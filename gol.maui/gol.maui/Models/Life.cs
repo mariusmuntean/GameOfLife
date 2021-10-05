@@ -37,7 +37,7 @@ namespace gol.maui.Models
 
             if (newRows <= 0 || newCols <= 0)
             {
-                throw new ArgumentOutOfRangeException("one or both dimensions of the provided 2d array is 0");
+                throw new ArgumentOutOfRangeException(nameof(initialCells), "one or both dimensions of the provided 2d array is 0");
             }
 
             _cells = initialCells;

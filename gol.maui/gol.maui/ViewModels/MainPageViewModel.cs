@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 using gol.maui.Models;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Essentials;
 using static gol.maui.MauiProgram;
 using Cell = gol.maui.Models.Cell;
 
