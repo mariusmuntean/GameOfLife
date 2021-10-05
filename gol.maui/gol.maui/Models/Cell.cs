@@ -1,6 +1,6 @@
-using Microsoft.Maui.Controls;
 using System;
 using System.Text.Json.Serialization;
+using Microsoft.Maui.Controls;
 
 namespace gol.maui.Models
 {
@@ -33,7 +33,7 @@ namespace gol.maui.Models
                 {
                     return;
                 }
-                
+
                 currentState = value;
                 OnPropertyChanged();
             }

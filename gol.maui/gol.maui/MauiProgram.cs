@@ -6,7 +6,7 @@ using Microsoft.Maui.Hosting;
 
 namespace gol.maui
 {
-    public static class MauiProgram
+    public static partial class MauiProgram
     {
         public static MauiApp CreateMauiApp()
         {
@@ -19,6 +19,9 @@ namespace gol.maui
 
             builder.Services.AddSingleton<MainPageViewModel>();
             builder.Services.AddSingleton<MainPage>();
+
+            builder.Services.AddSingleton<DisplayPromptDelegate>(ChooseFileNamePrompt);
+            builder.Services.AddSingleton<DisplayActionSheetDelegate>(DisplayActionSheet);
 
             return builder.Build();
         }

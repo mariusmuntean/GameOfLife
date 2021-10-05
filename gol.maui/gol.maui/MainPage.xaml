@@ -5,25 +5,23 @@
         x:Class="gol.maui.MainPage"
         BackgroundColor="{DynamicResource SecondaryColor}">
 
-        <ContentPage.BindingContext>
-                <ViewModels:MainPageViewModel />
-        </ContentPage.BindingContext>
-
-        <Grid RowDefinitions="*, Auto">
-                <Views:SimpleLife2 GridLayout.Row="0"
+    <Grid RowDefinitions="*, Auto">
+        <Views:SimpleLife2 GridLayout.Row="0"
                         VerticalOptions="FillAndExpand"
                         HorizontalOptions="FillAndExpand"
                         Padding="15"
                         Cells="{Binding Life.Cells}"
                         ClickedCommand="{Binding CellClickedCommand}" />
-                <StackLayout GridLayout.Row="1"
+        <StackLayout GridLayout.Row="1"
                         Orientation="Horizontal">
-                        <Button Text="Tick"
+            <Button Text="Tick"
                                 Command="{Binding TickCommand}" />
-                        <Button Text="Clear"
+            <Button Text="Clear"
                                 Command="{Binding ClearCommand}" />
-                        <Button Text="Open"
+            <Button Text="Save"
+                                Command="{Binding SaveCommand}"></Button>
+            <Button Text="Open"
                                 Command="{Binding OpenCommand}"></Button>
-                </StackLayout>
-        </Grid>
+        </StackLayout>
+    </Grid>
 </ContentPage>
