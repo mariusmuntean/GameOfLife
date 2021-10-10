@@ -9,12 +9,12 @@ namespace gol.maui.Views
         RectangleF? _lastDrawnArea;
         (float cellEdgeLength, float cellEdgeLengthWithSpacing)? _lastCellEdgeLengthts;
 
-        public CellsDrawable(Models.Cell[][] cells)
+        public CellsDrawable(Cell[][] cells)
         {
             Cells = cells;
         }
 
-        public Models.Cell[][] Cells { get; }
+        public Cell[][] Cells { get; }
 
         public void Draw(ICanvas canvas, RectangleF dirtyRect)
         {
