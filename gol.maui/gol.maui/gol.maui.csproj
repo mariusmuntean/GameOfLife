@@ -70,5 +70,8 @@
 		<OutputType>WinExe</OutputType>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Platforms\Windows\PointExtensions.cs" />
+	</ItemGroup>
 
 </Project>

@@ -2,15 +2,15 @@
 
 namespace gol.maui
 {
-    public partial class App : Application
-    {
-        public App(MainPage mainPage)
-        {
-            InitializeComponent();
+	public partial class App : Application
+	{
+		public App(MainPage mainPage)
+		{
+			InitializeComponent();
 
-            ViewHelpers.CellsGraphicsViewHelper.AddClickHandler();
+			CellsGraphicsViewHelper.AddClickHandler();
 
-            MainPage = mainPage;
-        }
-    }
+			MainPage = mainPage;
+		}
+	}
 }
